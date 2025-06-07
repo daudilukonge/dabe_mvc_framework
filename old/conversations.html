@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare - Conversations</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-left">
+                <h1>FileShare</h1>
+            </div>
+            <div class="header-right">
+                <button id="newChatBtn" class="btn-icon">
+                    <span>+ New Chat</span>
+                </button>
+                <div class="user-menu">
+                    <img src="assets/user-avatar.png" alt="User" class="avatar">
+                </div>
+            </div>
+        </header>
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search conversations...">
+                </div>
+                <div class="conversation-list">
+                    <div class="conversation active">
+                        <div class="conversation-avatar">JD</div>
+                        <div class="conversation-details">
+                            <h4>John Doe</h4>
+                            <p>project-final.zip</p>
+                        </div>
+                        <span class="conversation-time">2h ago</span>
+                    </div>
+                    <div class="conversation">
+                        <div class="conversation-avatar">AS</div>
+                        <div class="conversation-details">
+                            <h4>Alice Smith</h4>
+                            <p>meeting-notes.pdf</p>
+                        </div>
+                        <span class="conversation-time">1d ago</span>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="conversations.html" class="active">
+                        <span>Chats</span>
+                    </a>
+                    <a href="users.html">
+                        <span>Users</span>
+                    </a>
+                    <a href="settings.html">
+                        <span>Settings</span>
+                    </a>
+                    <a href="admin.html" class="admin-link">
+                        <span>Admin</span>
+                    </a>
+                </nav>
+            </aside>
+            <main class="content-area">
+                <div class="empty-state">
+                    <img src="assets/select-chat.svg" alt="Select a conversation">
+                    <h2>Select a conversation</h2>
+                    <p>Choose an existing chat or start a new one</p>
+                </div>
+            </main>
+        </div>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

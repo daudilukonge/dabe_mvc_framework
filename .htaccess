@@ -1,0 +1,14 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Accept loading of actual files and directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Send all other requests to index.php
+RewriteRule ^(.*)$ index.php?url1=$1 [L,QSA]
+
+# Deny access to .env file
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>

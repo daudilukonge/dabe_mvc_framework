@@ -1,0 +1,31 @@
+body {
+    background-color: #f7f7f7;
+    font-family: 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
+
+h1 {
+    font-size: 80px;
+    margin-bottom: 20px;
+    color: #ff6b6b;
+}
+
+p {
+    font-size: 24px;
+    color: #333;
+}
+
+a {
+    margin-top: 30px;
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 5px;
+}
+
+a:hover {
+    background-color: #2980b9;
+}

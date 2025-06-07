@@ -1,0 +1,15 @@
+{
+    "name" : "dabetech/sharenami",
+    "description" : "Web App for ShareNami, a platform for sharing files.",
+    "type" : "project",
+    "autoload" : {
+        "psr-4" : {
+            "App\\" : "app/" 
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6",
+        "phpmailer/phpmailer": "^6.9"
+    }
+}
