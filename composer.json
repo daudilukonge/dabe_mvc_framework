@@ -1,6 +1,7 @@
 {
     "name" : "dabetech/dabe_mvc_framework",
     "description" : "Web App framework, MVC based for PHP",
+    "version": "1.0.0",
     "keywords" : [
         "php",
         "mvc",
