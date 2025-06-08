@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'dabetech/dabe_mvc_framework',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => 'f13225b65c85ef3876079aa22f48cf0757730866',
+        'pretty_version' => '1.0.0',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'dabetech/dabe_mvc_framework' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => 'f13225b65c85ef3876079aa22f48cf0757730866',
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
