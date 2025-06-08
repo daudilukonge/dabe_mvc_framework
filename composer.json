@@ -1,6 +1,12 @@
 {
-    "name" : "dabetech/sharenami",
-    "description" : "Web App for ShareNami, a platform for sharing files.",
+    "name" : "dabetech/dabe_mvc_framework",
+    "description" : "Web App framework, MVC based for PHP",
+    "keywords" : [
+        "php",
+        "mvc",
+        "framework",
+        "dabetech"
+    ],
     "type" : "project",
     "autoload" : {
         "psr-4" : {

@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'dabetech/sharenami',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'name' => 'dabetech/dabe_mvc_framework',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'f13225b65c85ef3876079aa22f48cf0757730866',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'dabetech/sharenami' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+        'dabetech/dabe_mvc_framework' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'f13225b65c85ef3876079aa22f48cf0757730866',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
