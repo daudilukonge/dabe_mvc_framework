@@ -55,9 +55,6 @@
 
     // user controller routes
     $app->addRoute('get', '/users/users-list', UserController::class, 'listUsers');
-    $app->addRoute('get', '/user/conversations', UserController::class, 'conversations');
-    $app->addRoute('get', '/user/settings', UserController::class, 'userSettings');
-    $app->addRoute('get', '/user/chat', UserController::class, 'chatWithUser');
 
     // auth controller routes
     $app->addRoute('get', '/login', AuthController::class, 'login');
@@ -65,9 +62,6 @@
 
     // middleware controller routes
     $app->addRoute('get', '/user/register/otp-verification-page', MiddlewareController::class, 'emailVerification');
-
-    // admin controller routes
-    $app->addRoute('get', '/admin', AdminController::class, 'index');
 
     // api routes
     $app->addRoute('post', '/api/users/login', Authentication::class, 'loginUser');

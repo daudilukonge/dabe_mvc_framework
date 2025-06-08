@@ -35,8 +35,8 @@
         public static function getViewData() {
 
             return [
-                'siteName' => 'ShareNami',
-                'sitePreview' => "Secure File Sharing Platform",
+                'siteName' => 'SiteName',
+                'sitePreview' => "Site description",
                 'ownerName' => 'DabeTech',
                 'helpers' => Helpers::class
             ];

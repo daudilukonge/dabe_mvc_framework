@@ -33,7 +33,7 @@
             // call parent constructor
             parent::__construct();
 
-            $this->data = ViewsComponent::getViewData(); // get view data
+            $this->data = ViewsComponent::getViewData(); // get view data 
             $this->cssFile = 'style.css'; // set css file
             
         }
