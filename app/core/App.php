@@ -103,32 +103,32 @@
 
             // check if uri is allowed, and allowed http method was used
             if (in_array($this->uri, $allowedURI)) {
-                if (isset($this->routes[$this->httpMethod][$this->uri])) {
-                    // get controller and method
-                    $controller = $this->routes[$this->httpMethod][$this->uri]['controller'];
-                    $method = $this->routes[$this->httpMethod][$this->uri]['method'];
+                $matched = false;
 
-                    // check if controller and mehod exists
-                    if (class_exists($controller) && method_exists($controller, $method)) {
-                        // create new controller object
-                        $controller = new $controller;
+                foreach ($this->routes[$this->httpMethod] ?? [] as $route) {
 
-                        // ensure method is callable
-                        if (is_callable([$controller, $method]) || method_exists($controller, $method)) {
-                            // call method
-                            $controller->$method();
-                        } else {
-                            // method not callable, abort
-                            $this->abort(404); // not found
+                    if (preg_match($route['pattern'], $this->uri, $matches)) {
+
+                        // get controller and method
+                        $controller = $route['controller'];
+                        $method = $route['method'];
+
+                        if (class_exists($controller) && method_exists($controller, $method)) {
+                            $controller = new $controller;
+
+                            // Extract named params {id}, {name}, etc.
+                            $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+
+                            call_user_func_array([$controller, $method], $params);
+                            $matched = true;
+                            break;
                         }
-                        
-                    } else {
-                        // controller or method not found, abort
-                        $this->abort(404);
                     }
 
-                } else {
-                    $this->abort(404); // not found
+                }
+
+                if (!$matched) {
+                    $this->abort(404);
                 }
 
             } else {
