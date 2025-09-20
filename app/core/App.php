@@ -14,6 +14,7 @@
     namespace App\Core;
 
     class App {
+
         private $uri;
         private $httpMethod;
         private $routes = [];
@@ -21,6 +22,8 @@
         private $allowedHTTPMethods = ['GET' => true, 'POST' => true];
         private $errorController;
         private $errorMethod;
+
+
         
         /**
          * 
@@ -31,11 +34,16 @@
          * 
         */
         public function __construct() {
+
             // define uri
             $this->uri = parse_url($_SERVER['REQUEST_URI'])['path'] ?? '';
+
             // define http request method
             $this->httpMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+
         }
+
+
 
         /**
          * 
@@ -45,12 +53,28 @@
          * 
         */
         public function addRoute($httpMethod, $uri, $controller, $method) {
+
             // assign routes
             $httpMethod = strtoupper($httpMethod);
-            $this->routes[$httpMethod][$uri] = ['controller' => $controller, 'method' => $method];
+
+            // convert {param} into regex group
+            $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $uri);
+            $pattern = "#^" . $pattern . "$#"; // match the whole string
+
+            $this->routes[$httpMethod][$uri] = [
+                'controller' => $controller,
+                'method' => $method,
+                'uri' => $uri,
+                'pattern' => $pattern
+            ];
+
             // return instance for method chaining
             return $this;
+
         }
+
+
+
 
         /**
          * 
@@ -60,17 +84,24 @@
          * 
         */
         public function addAllowedHTTPMethods($httpMethod) {
+
             // if not an array, convert it to array
             $httpMethod = (array) $httpMethod; // force to array
 
             foreach ($httpMethod as $method) {
+
                 $method = strtoupper($method); // force to uppercase
+
                 // check if method is not already in allowed http methods
                 if (!isset($this->allowedHTTPMethods[$method])) {
                     $this->allowedHTTPMethods[$method] = true; // add to allowed http methods
                 }
+
             }
+
         }
+
+
 
         /**
          * 
@@ -80,9 +111,13 @@
          * 
         */
         public function setErrorController($errorController, $errorMethod) {
+
             $this->errorController = $errorController;
             $this->errorMethod = $errorMethod;
+
         }
+
+
 
         /**
          * 
@@ -92,57 +127,65 @@
          * 
          */
         public function run() {
+
             // Validate HTTP method
             if (!array_key_exists($this->httpMethod, $this->allowedHTTPMethods)) {
+
                 // http method not allowed, abort
                 $this->abort(405); // method not allowed
+
             }
 
-            // Validate URIs
-            $allowedURI = $this->getAllowedURIs(); // get allowed uri
+            $matched = false;
 
-            // check if uri is allowed, and allowed http method was used
-            if (in_array($this->uri, $allowedURI)) {
-                $matched = false;
+            foreach ($this->routes[$this->httpMethod] ?? [] as $route) {
 
-                foreach ($this->routes[$this->httpMethod] ?? [] as $route) {
+                if (preg_match($route['pattern'], $this->uri, $matches)) {
 
-                    if (preg_match($route['pattern'], $this->uri, $matches)) {
+                    // get controller and method
+                    $controller = $route['controller'];
+                    $method = $route['method'];
 
-                        // get controller and method
-                        $controller = $route['controller'];
-                        $method = $route['method'];
+                    if (class_exists($controller) && method_exists($controller, $method)) {
+                        $controller = new $controller;
 
-                        if (class_exists($controller) && method_exists($controller, $method)) {
-                            $controller = new $controller;
+                        // Extract named params {id}, {name}, etc.
+                        $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
-                            // Extract named params {id}, {name}, etc.
-                            $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                        // Reorder params to match method signature
+                        $ref = new \ReflectionMethod($controller, $method);
+                        $orderedParams = [];
 
-                            call_user_func_array([$controller, $method], $params);
-                            $matched = true;
-                            break;
-                        }
+                        foreach($ref->getParameters() as $param) {
+
+                            $name = $param->getName();
+                            $orderedParams[] = $params[$name] ?? null;
+
+                        } 
+
+                        call_user_func_array([$controller, $method], $orderedParams);
+                        $matched = true;
+                        break;
                     }
-
                 }
 
-                if (!$matched) {
-                    $this->abort(404);
-                }
+            }
 
-            } else {
-                $this->abort(404); // forbidden
+            if (!$matched) {
+                $this->abort(404);
             }
 
         }
 
         private function getAllowedURIs() {
+
             // get allowed uri from routes
             return array_keys($this->routes[$this->httpMethod] ?? []);
+
         }
 
         public function abort($code) {
+            
             http_response_code($code); // set HTTP response code
             
             $errorController = $this->errorController;
